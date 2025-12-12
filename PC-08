@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+
+class ImageSlideAnimation extends StatefulWidget {
+  const ImageSlideAnimation({super.key});
+
+  @override
+  State<ImageSlideAnimation> createState() => _ImageSlideAnimationState();
+}
+
+class _ImageSlideAnimationState extends State<ImageSlideAnimation>
+    with SingleTickerProviderStateMixin {
+
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    // Slide from LEFT → RIGHT
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(-1.0, 0.0), // Start outside on the left
+      end: Offset.zero,               // End at normal position
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    // Start animation
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Image Slide Animation")),
+      body: Center(
+        child: SlideTransition(
+          position: _slideAnimation,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              "https://picsum.photos/300/200",
+              width: 300,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
