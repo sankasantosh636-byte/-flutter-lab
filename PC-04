@@ -1,0 +1,17 @@
+Stack(
+  children: [
+    Container(
+      height: 200,
+      color: Colors.blue, // background
+    ),
+    Positioned(
+      bottom: 20,
+      left: 20,
+      child: Column(
+        children: [
+          Text("Some text"),
+        ],
+      ),
+    ),
+  ],
+);
