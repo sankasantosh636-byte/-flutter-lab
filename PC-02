@@ -1,0 +1,7 @@
+return SingleChildScrollView(
+  child: Column(
+    children: [
+      // your widgets
+    ],
+  ),
+);
